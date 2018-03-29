@@ -1,5 +1,7 @@
 package com.company.g1.g1extrateamlab;
 
+import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,10 +17,33 @@ public class Spaceship {
     private float       aFactor = 5.0f;
     private float       rotation = 0f;
 
+    private Handler bulletHandler  = new Handler();
+    private int     bulletFireRate = 200;
+
     // TODO Allow Spaceship and Bullet class to get ImageView resources themselves?
 
     Spaceship(ImageView ship) {
         this.ship = ship;
+        setBulletHandler();
+    }
+
+    private void setBulletHandler() {
+        bulletHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //ImageView ship = findViewById(R.id.spaceship);
+                final float theta = rotation - 90f;
+                int   offset = 10;
+                int   shipRadius  = ship.getHeight() / 2;
+                float shipCenterX = ship.getX() + shipRadius;
+                float shipCenterY = ship.getY() + shipRadius;
+                float bulletX = (float)(shipCenterX + (shipRadius + offset) * Math.cos(Math.toRadians(theta)));
+                float bulletY = (float)(shipCenterY + (shipRadius + offset) * Math.sin(Math.toRadians(theta)));
+
+                new Bullet(ship.getContext(), bulletX, bulletY, 15, theta);
+                bulletHandler.postDelayed(this, bulletFireRate);
+            }
+        }, bulletFireRate);
     }
 
     public void accelerate(float aX, float aY) {
@@ -50,5 +75,6 @@ public class Spaceship {
     public float getRotation() {
         return rotation;
     }
+
 
 }
