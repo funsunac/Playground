@@ -3,10 +3,13 @@ package com.company.g1.g1extrateamlab;
 
 import android.os.Handler;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Bullet extends GameObject {
 
-    static ArrayList<Bullet> bullets = new ArrayList<>();
+    // Dev doc say using CopyOnWriteArrayList is costly
+    // Ought to think of a better way to avoid ConcurrentModificationException
+    static CopyOnWriteArrayList<Bullet> bullets = new CopyOnWriteArrayList<>();
 
     private final int ANIM_PERIOD = 25;
 

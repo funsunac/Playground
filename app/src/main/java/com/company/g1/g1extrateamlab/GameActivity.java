@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class GameActivity extends AppCompatActivity {
+    GameView gameView;
 
     Spaceship           spaceship;
     final int           PITCH_OFFSET = 5;   // Accelerometer Y-axis offset
@@ -28,7 +29,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final GameView gameView = new GameView(this);
+        gameView = new GameView(this);
         setContentView(gameView);
 
         gameView.post(new Runnable() {
@@ -59,12 +60,14 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        gameView.resume();
         sensorManager.registerListener(
                 sensorEventListener, accelerometer, SensorManager.SENSOR_DELAY_GAME);
     }
     @Override
     protected void onPause() {
         super.onPause();
+        gameView.pause();
         sensorManager.unregisterListener(sensorEventListener);
     }
 }
