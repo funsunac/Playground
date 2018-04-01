@@ -1,6 +1,6 @@
 # MAD Group Project #
 
-This is the working repository for MAD 2017-18 Semester 2 Group Projec 1G1.
+This is the working repository for MAD 2017-18 Semester 2 Group Project 1G1.
 The document here is copied from last semester OOP project, please correct me if there are any problems.
 
 ### How do I get set up? ###
