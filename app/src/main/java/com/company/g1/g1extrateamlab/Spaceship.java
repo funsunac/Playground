@@ -2,17 +2,18 @@ package com.company.g1.g1extrateamlab;
 
 import android.os.Handler;
 
-import java.util.List;
+import java.util.EnumSet;
 
-public class Spaceship extends GameObject {
+public class Spaceship extends MovableObject {
 
-    private float       aFactor  = 5.0f;
 
     private Handler bulletHandler  = new Handler();
     private int     bulletFireRate = 200;
 
-    // Where and how to get layout bounds?
     Spaceship() {
+        super(50,50,50,50);
+        speed = 5;
+        theta = -90f;
         setBulletHandler();
     }
 
@@ -26,26 +27,10 @@ public class Spaceship extends GameObject {
                 float shipCenterY = y + radius;
                 float bulletX = (float)(shipCenterX + (radius + offset) * Math.cos(Math.toRadians(theta)));
                 float bulletY = (float)(shipCenterY + (radius + offset) * Math.sin(Math.toRadians(theta)));
-
-                new Bullet(bulletX, bulletY, 15, theta);
+                new Bullet(bulletX, bulletY, theta);
                 bulletHandler.postDelayed(this, bulletFireRate);
             }
         }, bulletFireRate);
-    }
-
-    public void accelerate(float aX, float aY) {
-        x = x - aFactor * aX;
-        y = y + aFactor * aY;
-
-        // TODO create onOutOfBound() in parent class
-        if (x < 0)
-            x = 0;
-        else if (x > xBound - width)
-            x = xBound - width;
-        if (y < 0)
-            y = 0;
-        else if (y > yBound - height)
-            y = yBound - height;
     }
 
     public void setRotation(float rotation) {

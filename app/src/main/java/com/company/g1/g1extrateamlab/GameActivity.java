@@ -5,6 +5,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -21,7 +22,7 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         public final void onSensorChanged(SensorEvent event) {
-            spaceship.accelerate(event.values[0], event.values[1] - PITCH_OFFSET);
+            spaceship.update(event.values[0], event.values[1] - PITCH_OFFSET);
         }
     };
 
@@ -42,6 +43,18 @@ public class GameActivity extends AppCompatActivity {
 
         spaceship = new Spaceship();
         gameView.spaceship = this.spaceship;
+
+        final Handler handler = new Handler();
+        final int updateRate = 50;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                spaceship.update();
+                for(Bullet bullet : Bullet.bullets)
+                    bullet.update();
+                handler.postDelayed(this, updateRate);
+            }
+        }, updateRate);
 
 //        gameLayout.setOnTouchListener(new OnRotationListener(){
 //            @Override

@@ -1,41 +1,30 @@
 package com.company.g1.g1extrateamlab;
 
 
-import android.os.Handler;
-import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class Bullet extends GameObject {
+public class Bullet extends MovableObject {
 
     // Dev doc say using CopyOnWriteArrayList is costly
     // Ought to think of a better way to avoid ConcurrentModificationException
     static CopyOnWriteArrayList<Bullet> bullets = new CopyOnWriteArrayList<>();
 
-    private final int ANIM_PERIOD = 25;
-
-    Bullet(float _x, float _y, int r, float theta) {
-        final int _r = r;
-        final float _theta = theta;
-        final Handler handler = new Handler();
-        this.x = _x;
-        this.y = _y;
+    Bullet(float x, float y, float theta) {
+        super(x, y, 20, 20);
+        speed = 15;
+        this.theta = theta;
+        this.x = x;
+        this.y = y;
         bullets.add(this);
-
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                x = (float)(x + _r * Math.cos(Math.toRadians(_theta)));
-                y = (float)(y + _r * Math.sin(Math.toRadians(_theta)));
-                if(x > 50 && x < xBound - 50
-                        && y > 50 && y < yBound - 50)
-                    handler.postDelayed(this, ANIM_PERIOD);
-                else
-                    removeSelf();
-            }
-        }, ANIM_PERIOD);
     }
 
     private void removeSelf() {
         bullets.remove(this);
+    }
+
+    @Override
+    void onOutOfBound(EnumSet<Bound> bounds) {
+        removeSelf();
     }
 }
