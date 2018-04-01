@@ -1,40 +1,38 @@
 package com.company.g1.g1extrateamlab;
 
-import android.app.Activity;
-import android.content.Context;
+
 import android.os.Handler;
-import android.support.constraint.ConstraintLayout;
-import android.widget.ImageView;
+import java.util.ArrayList;
 
-public class Bullet{
+public class Bullet extends GameObject {
 
-    private ImageView bullet;
+    static ArrayList<Bullet> bullets = new ArrayList<>();
+
     private final int ANIM_PERIOD = 25;
 
-    Bullet(Context context, float x, float y, int r, float theta) {
-        bullet = new ImageView(context);
-        bullet.setImageResource(R.drawable.bullet);
-
-        final ConstraintLayout gameLayout = ((Activity)context).findViewById(R.id.gameLayout);
-        gameLayout.addView(bullet);
-
+    Bullet(float _x, float _y, int r, float theta) {
         final int _r = r;
         final float _theta = theta;
         final Handler handler = new Handler();
-        bullet.setX(x - bullet.getDrawable().getIntrinsicWidth()/2);
-        bullet.setY(y);
+        this.x = _x;
+        this.y = _y;
+        bullets.add(this);
 
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                bullet.setX((float)(bullet.getX() + _r * Math.cos(Math.toRadians(_theta))));
-                bullet.setY((float)(bullet.getY() + _r * Math.sin(Math.toRadians(_theta))));
-                if(bullet.getX() > 50 && bullet.getX() < gameLayout.getWidth() - 50
-                        && bullet.getY() > 50 && bullet.getY() < gameLayout.getHeight() - 50)
+                x = (float)(x + _r * Math.cos(Math.toRadians(_theta)));
+                y = (float)(y + _r * Math.sin(Math.toRadians(_theta)));
+                if(x > 50 && x < xBound - 50
+                        && y > 50 && y < yBound - 50)
                     handler.postDelayed(this, ANIM_PERIOD);
                 else
-                    gameLayout.removeView(bullet);
+                    removeSelf();
             }
         }, ANIM_PERIOD);
+    }
+
+    private void removeSelf() {
+        bullets.remove(this);
     }
 }
