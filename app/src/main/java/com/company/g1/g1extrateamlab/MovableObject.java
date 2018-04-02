@@ -6,12 +6,14 @@ import java.util.EnumSet;
 
 abstract class MovableObject extends GameObject {
 
-    static int test;
-    float speed;    // This is speed right? My physics on99
+    float speed;
     float theta;
 
-    MovableObject(float x, float y, float height, float width) {
+    // Parameter so long! Eww.
+    MovableObject(float x, float y, float height, float width, float speed) {
         super(x, y, height, width);
+        this.speed = speed;
+        this.theta = -90f;  // Pointing upwards by default
     }
 
     // Update per time unit, 1 time unit = 1 game tick
@@ -32,27 +34,27 @@ abstract class MovableObject extends GameObject {
         checkOutOfBound();
     }
 
-    void onOutOfBound(EnumSet<Bound> bounds) {
-        if(bounds.contains(Bound.LEFT))
+    void onOutOfBound(EnumSet<BOUND> bounds) {
+        if(bounds.contains(BOUND.LEFT))
             x = 0;
-        if(bounds.contains(Bound.RIGHT))
-            x = xBound - width;
-        if(bounds.contains(Bound.TOP))
+        if(bounds.contains(BOUND.RIGHT))
+            x = LAYOUT_WIDTH - width;
+        if(bounds.contains(BOUND.TOP))
             y = 0;
-        if(bounds.contains(Bound.BOTTOM))
-            y = yBound - height;
+        if(bounds.contains(BOUND.BOTTOM))
+            y = LAYOUT_HEIGHT - height;
     }
 
     void checkOutOfBound() {
-        EnumSet<Bound> bounds = EnumSet.noneOf(Bound.class);
+        EnumSet<BOUND> bounds = EnumSet.noneOf(BOUND.class);
         if (x < 0)  {
-            bounds.add(Bound.LEFT);
-        } else if (x + width > xBound)
-            bounds.add(Bound.RIGHT);
+            bounds.add(BOUND.LEFT);
+        } else if (x + width > LAYOUT_WIDTH)
+            bounds.add(BOUND.RIGHT);
         if (y < 0)  {
-            bounds.add(Bound.TOP);
-        } else if (y + height > yBound)
-            bounds.add(Bound.BOTTOM);
+            bounds.add(BOUND.TOP);
+        } else if (y + height > LAYOUT_HEIGHT)
+            bounds.add(BOUND.BOTTOM);
         if(!bounds.isEmpty())
             onOutOfBound(bounds);
     }

@@ -21,9 +21,9 @@ public class GameView extends SurfaceView implements Runnable {
     Paint paint = new Paint();
     Paint paint2 = new Paint();
     Bitmap bitmap;
-
     Thread renderThread = null;
     SurfaceHolder holder;
+    Canvas canvas;
     volatile boolean running = false;
 
     public GameView(Context context) {
@@ -35,13 +35,13 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     void loadImageResources() {
-        bitmap = decodeSampledBitmapFromResource(
-                getResources(), R.drawable.circle_vector_2,
-                (int)spaceship.width, (int)spaceship.height);
+        Bitmap _bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.circle_vector_2);
+        bitmap = Bitmap.createScaledBitmap(_bitmap,(int)spaceship.width,(int)spaceship.height,false);
     }
 
     public void resume() {
         running = true;
+        loadImageResources();
         renderThread = new Thread(this);
         renderThread.start();
     }
@@ -51,9 +51,7 @@ public class GameView extends SurfaceView implements Runnable {
         while(running) {
             if(!holder.getSurface().isValid())  // What does this do?
                 continue;
-            loadImageResources();
-
-            Canvas canvas = holder.lockCanvas();
+            canvas = holder.lockCanvas();
             draw(canvas);   // This part deviates from the copy source, is it ok?
             holder.unlockCanvasAndPost(canvas);
         }
@@ -76,69 +74,32 @@ public class GameView extends SurfaceView implements Runnable {
     public void draw(Canvas canvas) {
         super.draw(canvas);
 //        testThreadingEffect();
-
-        drawSpaceship(canvas);
-        drawBullet(canvas);
-//        drawEnemy();
-
-
-
-        for(Enemy enemy : Enemy.enemies)
-            canvas.drawCircle(enemy.x,enemy.y,enemy.width/2, paint2);
+        drawSpaceship();
+        drawBullets();
+        drawEnemies();
     }
 
-    private void drawSpaceship(Canvas canvas) {
+    private void drawSpaceship() {
         canvas.drawBitmap(bitmap,spaceship.x,spaceship.y,null);
+//        float centerX = spaceship.x + spaceship.radius;
+//        float centerY = spaceship.y + spaceship.radius;
+//        canvas.drawCircle(centerX,centerY,spaceship.radius,paint);
     }
 
-    private void drawBullet(Canvas canvas) {
-        for(Bullet bullet : Bullet.bullets)
-            canvas.drawCircle(bullet.x,bullet.y,bullet.width/2, paint);
-    }
-
-
-
-    // Apparently all code below are necessary just to scale the size of a bitmap...
-    // https://developer.android.com/topic/performance/graphics/load-bitmap.html
-    // Really? WTF!?
-
-    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
-                                                         int reqWidth, int reqHeight) {
-
-        // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, resId, options);
-
-        // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeResource(res, resId, options);
-    }
-
-    public static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) >= reqHeight
-                    && (halfWidth / inSampleSize) >= reqWidth) {
-                inSampleSize *= 2;
-            }
+    private void drawBullets() {
+        for(Bullet bullet : Bullet.bullets) {
+            float centerX = bullet.x + bullet.radius;
+            float centerY = bullet.y + bullet.radius;
+            canvas.drawCircle(centerX,centerY,bullet.radius, paint);
         }
+    }
 
-        return inSampleSize;
+    private void drawEnemies() {
+        for(Enemy enemy : Enemy.enemies) {
+            float centerX = enemy.x + enemy.radius;
+            float centerY = enemy.y + enemy.radius;
+            canvas.drawCircle(centerX,centerY,enemy.radius, paint);
+        }
     }
 
     /**

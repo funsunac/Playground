@@ -7,24 +7,29 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Enemy extends MovableObject{
 
+    private final static float  ENEMY_SPEED      = 10;
+    private final static float  ENEMY_HEIGHT     = 50;
+    private final static float  ENEMY_WIDTH      = 50;
+    private final static long   ENEMY_SPAWN_RATE = 1000;
+
+    private static Handler spawnHandler = new Handler();
+
     static CopyOnWriteArrayList<Enemy> enemies = new CopyOnWriteArrayList<>();
-    static int spawnRate = 1000;
-    static Handler spawner = new Handler();
 
     static void spawnEnemy() {
-        spawner.postDelayed(new Runnable() {
+        spawnHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                new Enemy(50,50,40,40);
-                spawner.postDelayed(this, spawnRate);
+                float x = (float)(Math.random() * LAYOUT_WIDTH * 0.9);
+                new Enemy(x,0);
+                spawnHandler.postDelayed(this, ENEMY_SPAWN_RATE);
             }
-        }, spawnRate);
+        }, ENEMY_SPAWN_RATE);
     }
 
-    Enemy(float x, float y, float height, float width) {
-        super(x, y, height, width);
-        speed = 10;
-        theta = 90f;
+    Enemy(float x, float y) {
+        super(x, y, ENEMY_HEIGHT, ENEMY_WIDTH, ENEMY_SPEED);
+        theta = 90f;    // Moving downwards
         enemies.add(this);
     }
 
@@ -33,7 +38,7 @@ public class Enemy extends MovableObject{
     }
 
     @Override
-    void onOutOfBound(EnumSet<Bound> bounds) {
+    void onOutOfBound(EnumSet<BOUND> bounds) {
         removeSelf();
     }
 

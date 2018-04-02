@@ -2,6 +2,8 @@ package com.company.g1.g1extrateamlab;
 
 import java.util.EnumSet;
 
+// BUGGY!
+
 public class BouncyBullet extends Bullet {
 
     int bouncedCount = 0;
@@ -11,7 +13,7 @@ public class BouncyBullet extends Bullet {
     }
 
     @Override
-    void onOutOfBound(EnumSet<Bound> bounds) {
+    void onOutOfBound(EnumSet<BOUND> bounds) {
         if(bouncedCount == 1)
             removeSelf();
         else {

@@ -40,8 +40,8 @@ public class GameActivity extends AppCompatActivity {
         gameView.post(new Runnable() {
             @Override
             public void run() {
-                GameObject.xBound = gameView.getWidth();
-                GameObject.yBound = gameView.getHeight();
+                GameObject.LAYOUT_WIDTH = gameView.getWidth();
+                GameObject.LAYOUT_HEIGHT = gameView.getHeight();
                 collisionSystem.setGridParams();
             }
         });

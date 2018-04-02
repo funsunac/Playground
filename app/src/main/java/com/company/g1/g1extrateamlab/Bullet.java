@@ -6,16 +6,15 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Bullet extends MovableObject {
 
-    // Dev doc say using CopyOnWriteArrayList is costly
-    // Ought to think of a better way to avoid ConcurrentModificationException
+    private final static float  BULLET_SPEED    = 20;
+            final static float  BULLET_HEIGHT   = 40;
+            final static float  BULLET_WIDTH    = 40;
+
     static CopyOnWriteArrayList<Bullet> bullets = new CopyOnWriteArrayList<>();
 
     Bullet(float x, float y, float theta) {
-        super(x, y, 20, 20);
-        speed = 15;
+        super(x, y, BULLET_HEIGHT, BULLET_WIDTH, BULLET_SPEED);
         this.theta = theta;
-        this.x = x;
-        this.y = y;
         checkOutOfBound();
         bullets.add(this);
     }
@@ -25,7 +24,7 @@ public class Bullet extends MovableObject {
     }
 
     @Override
-    void onOutOfBound(EnumSet<Bound> bounds) {
+    void onOutOfBound(EnumSet<BOUND> bounds) {
         removeSelf();
     }
 }

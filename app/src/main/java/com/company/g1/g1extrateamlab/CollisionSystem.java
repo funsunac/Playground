@@ -1,7 +1,5 @@
 package com.company.g1.g1extrateamlab;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +25,8 @@ public class CollisionSystem {
     }
 
     void setGridParams() {
-        gridWidth = GameObject.xBound / N;
-        gridHeight = GameObject.yBound / M;
+        gridWidth = GameObject.LAYOUT_WIDTH / N;
+        gridHeight = GameObject.LAYOUT_HEIGHT / M;
     }
 
     void detectCollision() {
