@@ -27,6 +27,7 @@ abstract class MovableObject extends GameObject {
 //    }
 
     void update(float aX, float aY) {
+
         float vX = (float)(speed * -aX);
         float vY = (float)(speed *  aY);
         x += vX;

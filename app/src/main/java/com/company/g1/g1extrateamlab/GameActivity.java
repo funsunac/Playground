@@ -43,15 +43,17 @@ public class GameActivity extends AppCompatActivity {
 
         spaceship = new Spaceship();
         gameView.spaceship = this.spaceship;
-
+        Enemy.spawnEnemy();
         final Handler handler = new Handler();
-        final int updateRate = 50;
+        final int updateRate = 15;
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 spaceship.update();
                 for(Bullet bullet : Bullet.bullets)
                     bullet.update();
+                for(Enemy enemy : Enemy.enemies)
+                    enemy.update();
                 handler.postDelayed(this, updateRate);
             }
         }, updateRate);

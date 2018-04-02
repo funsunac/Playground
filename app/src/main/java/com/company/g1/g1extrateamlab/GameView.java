@@ -60,10 +60,10 @@ public class GameView extends SurfaceView implements Runnable {
         super.draw(canvas);
 //        testThreadingEffect();
         canvas.drawCircle(spaceship.x,spaceship.y,spaceship.width/2, paint);
-        for(Bullet bullet : Bullet.bullets) {
-            if (bullet != null)
-                canvas.drawCircle(bullet.x,bullet.y,spaceship.width/2, paint2);
-        }
+        for(Bullet bullet : Bullet.bullets)
+            canvas.drawCircle(bullet.x,bullet.y,spaceship.width/2, paint2);
+        for(Enemy enemy : Enemy.enemies)
+            canvas.drawCircle(enemy.x,enemy.y,enemy.width/2, paint2);
     }
 
     /**

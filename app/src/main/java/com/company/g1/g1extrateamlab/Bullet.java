@@ -19,7 +19,7 @@ public class Bullet extends MovableObject {
         bullets.add(this);
     }
 
-    private void removeSelf() {
+    void removeSelf() {
         bullets.remove(this);
     }
 

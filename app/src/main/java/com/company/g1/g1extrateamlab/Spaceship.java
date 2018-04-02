@@ -2,6 +2,7 @@ package com.company.g1.g1extrateamlab;
 
 import android.os.Handler;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.EnumSet;
 
 public class Spaceship extends MovableObject {
@@ -9,6 +10,7 @@ public class Spaceship extends MovableObject {
 
     private Handler bulletHandler  = new Handler();
     private int     bulletFireRate = 200;
+    Class bulletClass = BouncyBullet.class;
 
     Spaceship() {
         super(50,50,50,50);
@@ -27,7 +29,14 @@ public class Spaceship extends MovableObject {
                 float shipCenterY = y + radius;
                 float bulletX = (float)(shipCenterX + (radius + offset) * Math.cos(Math.toRadians(theta)));
                 float bulletY = (float)(shipCenterY + (radius + offset) * Math.sin(Math.toRadians(theta)));
-                new Bullet(bulletX, bulletY, theta);
+
+                // YOLOLOLOLOL
+                Class ctorArgs[] = new Class[]{float.class, float.class, float.class};
+                try {
+                    bulletClass.getConstructor(ctorArgs).newInstance(bulletX, bulletY, theta);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 bulletHandler.postDelayed(this, bulletFireRate);
             }
         }, bulletFireRate);
