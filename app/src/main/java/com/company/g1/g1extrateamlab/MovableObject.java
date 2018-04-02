@@ -6,6 +6,7 @@ import java.util.EnumSet;
 
 abstract class MovableObject extends GameObject {
 
+    static int test;
     float speed;    // This is speed right? My physics on99
     float theta;
 
@@ -35,22 +36,22 @@ abstract class MovableObject extends GameObject {
         if(bounds.contains(Bound.LEFT))
             x = 0;
         if(bounds.contains(Bound.RIGHT))
-            x = xBound;
+            x = xBound - width;
         if(bounds.contains(Bound.TOP))
             y = 0;
         if(bounds.contains(Bound.BOTTOM))
-            y = yBound;
+            y = yBound - height;
     }
 
     void checkOutOfBound() {
         EnumSet<Bound> bounds = EnumSet.noneOf(Bound.class);
         if (x < 0)  {
             bounds.add(Bound.LEFT);
-        } else if (x > xBound)
+        } else if (x + width > xBound)
             bounds.add(Bound.RIGHT);
         if (y < 0)  {
             bounds.add(Bound.TOP);
-        } else if (y > yBound)
+        } else if (y + height > yBound)
             bounds.add(Bound.BOTTOM);
         if(!bounds.isEmpty())
             onOutOfBound(bounds);

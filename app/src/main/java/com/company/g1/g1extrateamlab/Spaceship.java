@@ -10,14 +10,20 @@ public class Spaceship extends MovableObject {
 
     private Handler bulletHandler  = new Handler();
     private int     bulletFireRate = 200;
+    private float aX, aY;
 //    Class bulletClass = BouncyBullet.class;
     Class bulletClass = Bullet.class;
 
     Spaceship() {
-        super(50,50,50,50);
+        super(50,50,100,100);
         speed = 5;
         theta = -90f;
         setBulletHandler();
+    }
+
+    @Override
+    void update() {
+        super.update(aX, aY);
     }
 
     private void setBulletHandler() {
@@ -50,5 +56,10 @@ public class Spaceship extends MovableObject {
 
     public float getRotation() {
         return rotation;
+    }
+
+    public void setAcceleration(float aX, float aY) {
+        this.aX = aX;
+        this.aY = aY;
     }
 }

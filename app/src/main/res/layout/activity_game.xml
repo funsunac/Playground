@@ -9,21 +9,5 @@
     tools:context="com.company.g1.g1extrateamlab.GameActivity"
     tools:layout_editor_absoluteY="81dp">
 
-    <ImageView
-        android:id="@+id/spaceship"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="31dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/ic_power_settings_new_black_24dp"/>
 
-    <!--<ImageView-->
-    <!--android:id="@+id/centerSpot"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--app:srcCompat="@android:drawable/ic_delete"-->
-    <!--tools:layout_editor_absoluteX="156dp"-->
-    <!--tools:layout_editor_absoluteY="131dp" />-->
 </android.support.constraint.ConstraintLayout>

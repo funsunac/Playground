@@ -51,7 +51,6 @@ public class CollisionSystem {
             for(int j = 0; j < N; j++) {
                 grids[i][j].bullets.clear();
                 grids[i][j].enemies.clear();
-
             }
         }
     }

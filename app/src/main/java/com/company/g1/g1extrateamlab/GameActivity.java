@@ -6,6 +6,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -22,7 +23,7 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         public final void onSensorChanged(SensorEvent event) {
-            spaceship.update(event.values[0], event.values[1] - PITCH_OFFSET);
+            spaceship.setAcceleration(event.values[0], event.values[1] - PITCH_OFFSET);
         }
     };
 
@@ -31,7 +32,9 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         gameView = new GameView(this);
-        setContentView(gameView);
+//        setContentView(gameView);
+        setContentView(R.layout.activity_game);
+        ((ConstraintLayout)findViewById(R.id.gameLayout)).addView(gameView);
         final CollisionSystem collisionSystem = new CollisionSystem();
 
         gameView.post(new Runnable() {
