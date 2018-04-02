@@ -36,4 +36,8 @@ public class Enemy extends MovableObject{
     void onOutOfBound(EnumSet<Bound> bounds) {
         removeSelf();
     }
+
+    void onHit() {
+        removeSelf();
+    }
 }

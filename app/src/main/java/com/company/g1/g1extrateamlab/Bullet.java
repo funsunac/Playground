@@ -16,6 +16,7 @@ public class Bullet extends MovableObject {
         this.theta = theta;
         this.x = x;
         this.y = y;
+        checkOutOfBound();
         bullets.add(this);
     }
 

@@ -32,15 +32,18 @@ public class GameActivity extends AppCompatActivity {
 
         gameView = new GameView(this);
         setContentView(gameView);
+        final CollisionSystem collisionSystem = new CollisionSystem();
 
         gameView.post(new Runnable() {
             @Override
             public void run() {
                 GameObject.xBound = gameView.getWidth();
                 GameObject.yBound = gameView.getHeight();
+                collisionSystem.setGridParams();
             }
         });
 
+        // PUT IN NEW CLASS
         spaceship = new Spaceship();
         gameView.spaceship = this.spaceship;
         Enemy.spawnEnemy();
@@ -54,9 +57,11 @@ public class GameActivity extends AppCompatActivity {
                     bullet.update();
                 for(Enemy enemy : Enemy.enemies)
                     enemy.update();
+                collisionSystem.detectCollision();
                 handler.postDelayed(this, updateRate);
             }
         }, updateRate);
+        // PUT IN NEW CLASS
 
 //        gameLayout.setOnTouchListener(new OnRotationListener(){
 //            @Override

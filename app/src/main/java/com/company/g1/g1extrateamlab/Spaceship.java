@@ -10,7 +10,8 @@ public class Spaceship extends MovableObject {
 
     private Handler bulletHandler  = new Handler();
     private int     bulletFireRate = 200;
-    Class bulletClass = BouncyBullet.class;
+//    Class bulletClass = BouncyBullet.class;
+    Class bulletClass = Bullet.class;
 
     Spaceship() {
         super(50,50,50,50);

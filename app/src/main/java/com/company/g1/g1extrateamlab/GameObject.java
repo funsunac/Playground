@@ -26,33 +26,4 @@ abstract class GameObject{
         this.width = width;
         this.radius = height/2;
     }
-
-    void onOutOfBound(EnumSet<Bound> bounds) {
-        if(bounds.contains(Bound.LEFT))
-            x = 0;
-        if(bounds.contains(Bound.RIGHT))
-            x = xBound;
-        if(bounds.contains(Bound.TOP))
-            y = 0;
-        if(bounds.contains(Bound.BOTTOM))
-            y = yBound;
-    }
-
-    void checkOutOfBound() {
-        EnumSet<Bound> bounds = EnumSet.noneOf(Bound.class);
-        if (x < 0)  {
-            bounds.add(Bound.LEFT);
-        } else if (x > xBound)
-            bounds.add(Bound.RIGHT);
-        if (y < 0)  {
-            bounds.add(Bound.TOP);
-        } else if (y > yBound)
-            bounds.add(Bound.BOTTOM);
-        if(!bounds.isEmpty())
-            onOutOfBound(bounds);
-    }
-
-    float getRadius() {
-        return  height / 2;
-    }
 }
