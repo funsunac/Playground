@@ -1,7 +1,6 @@
 package com.company.g1.g1extrateamlab;
 
 import android.os.Handler;
-import android.util.Log;
 
 class Spaceship extends MovableObject {
 
@@ -20,6 +19,8 @@ class Spaceship extends MovableObject {
     private float               aY;
 //    private Class               bulletClass = Bullet.class;
     private Handler bulletHandler  = new Handler();
+
+
 
     Spaceship() {
         super(LAYOUT_WIDTH / 2 - SHIP_WIDTH / 2,

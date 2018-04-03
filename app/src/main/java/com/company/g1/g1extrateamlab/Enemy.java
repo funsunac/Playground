@@ -11,20 +11,24 @@ public class Enemy extends MovableObject{
     private final static float  ENEMY_HEIGHT     = 50;
     private final static float  ENEMY_WIDTH      = 50;
     private final static long   ENEMY_SPAWN_RATE = 1000;
-
-    private static Handler spawnHandler = new Handler();
-
     static CopyOnWriteArrayList<Enemy> enemies = new CopyOnWriteArrayList<>();
 
-    static void spawnEnemy() {
-        spawnHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                float x = (float)(Math.random() * LAYOUT_WIDTH * 0.9);
-                new Enemy(x,0);
-                spawnHandler.postDelayed(this, ENEMY_SPAWN_RATE);
-            }
-        }, ENEMY_SPAWN_RATE);
+    private static Handler  spawnHandler  = new Handler();
+    private static Runnable spawnRunnable = new Runnable(){
+        @Override
+        public void run() {
+            float x = (float) (Math.random() * LAYOUT_WIDTH * 0.9);
+            new Enemy(x, 0);
+            spawnHandler.postDelayed(this, ENEMY_SPAWN_RATE);
+        }
+    };
+
+    static void startSpawning() {
+        spawnHandler.postDelayed(spawnRunnable, ENEMY_SPAWN_RATE);
+    }
+
+    static void stopSpawning() {
+        spawnHandler.removeCallbacks(spawnRunnable);
     }
 
     Enemy(float x, float y) {

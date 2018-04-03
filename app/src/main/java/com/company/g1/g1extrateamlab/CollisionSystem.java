@@ -1,5 +1,7 @@
 package com.company.g1.g1extrateamlab;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,7 +81,7 @@ public class CollisionSystem {
     void findGridId(GameObject object) {
         int i = (int)(Math.ceil(object.y / gridHeight)-1);
         int j = (int)(Math.ceil(object.x / gridWidth)-1);
-//        Log.d("I", String.valueOf(object.y / gridHeight));
+        Log.d("I", String.valueOf(object.y / gridHeight));
 
         grids[i][j].addToList(object);
         int h = (int)(Math.min(Math.ceil((object.y + object.height) / gridHeight)-1,M-1));
