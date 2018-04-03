@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">1G1_madP</string>
+
+    <string name="new_game">New Game</string>
+    <string name="story_behind">Story Behind</string>
+    <string name="about_us">About Us</string>
+
+    <string name="title_activity_fullscreen">GameActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="title_activity_story_behind">StoryBehind</string>
+    <string name="about_us_content">
+        <!-- :) -->
+        This game was a group project created for
+        the HKUSPACE Mobile Application Development course during 2017-2018 Semester 2,
+        by the following members of CL-01 Group 1:
+        \nCHEUNG Pui Kin, Bacon (20026225)
+        \nHO Po Sum, Sum (20028157)
+        \nLAM Wai Hin, Jeanie (20031815)
+        \nLI Kwan To, Tommy (20027290)
+        \nNG Hoi Wa, Paul (20025578)
+        \nWONG Kam Yi, Janice (20030531)
+    </string>
 </resources>
