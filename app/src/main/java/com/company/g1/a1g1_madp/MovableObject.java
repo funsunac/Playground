@@ -1,4 +1,4 @@
-package com.company.g1.g1extrateamlab;
+package com.company.g1.a1g1_madp;
 
 import android.graphics.Rect;
 

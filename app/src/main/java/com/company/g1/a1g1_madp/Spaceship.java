@@ -1,4 +1,4 @@
-package com.company.g1.g1extrateamlab;
+package com.company.g1.a1g1_madp;
 
 import android.os.Handler;
 
@@ -18,9 +18,29 @@ class Spaceship extends MovableObject {
     private float               aX;
     private float               aY;
 //    private Class               bulletClass = Bullet.class;
-    private Handler bulletHandler  = new Handler();
 
 
+    /*
+     * There's a memory leak problem with handler:
+     * it stops the instance from being garbage-collected,
+     * thus causing memory leaks.
+     * https://www.androiddesignpatterns.com/2013/01/inner-class-handler-memory-leak.html
+     */
+
+    private Handler  bulletHandler  = new Handler();
+    private Runnable bulletRunnable = new Runnable() {
+        @Override
+        public void run() {
+            float shipCenterX = x + radius;
+            float shipCenterY = y + radius;
+            float bulletX = (float)(shipCenterX - Bullet.BULLET_WIDTH / 2
+                    + (radius + BULLET_OFFSET) * Math.cos(Math.toRadians(theta)));
+            float bulletY = (float)(shipCenterY - Bullet.BULLET_HEIGHT / 2
+                    + (radius + BULLET_OFFSET) * Math.sin(Math.toRadians(theta)));
+            new Bullet(bulletX, bulletY, theta);
+            bulletHandler.postDelayed(this, FIRE_RATE);
+        }
+    };
 
     Spaceship() {
         super(LAYOUT_WIDTH / 2 - SHIP_WIDTH / 2,
@@ -30,20 +50,11 @@ class Spaceship extends MovableObject {
     }
 
     private void fire() {
-        bulletHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-//                Log.d("rad", String.valueOf(radius));
-                float shipCenterX = x + radius;
-                float shipCenterY = y + radius;
-                float bulletX = (float)(shipCenterX - Bullet.BULLET_WIDTH / 2
-                        + (radius + BULLET_OFFSET) * Math.cos(Math.toRadians(theta)));
-                float bulletY = (float)(shipCenterY - Bullet.BULLET_HEIGHT / 2
-                        + (radius + BULLET_OFFSET) * Math.sin(Math.toRadians(theta)));
-                new Bullet(bulletX, bulletY, theta);
-                bulletHandler.postDelayed(this, FIRE_RATE);
-            }
-        }, FIRE_RATE);
+        bulletHandler.postDelayed(bulletRunnable, FIRE_RATE);
+    }
+
+    void stopFire() {
+        bulletHandler.removeCallbacks(bulletRunnable);
     }
 
     void setAcceleration(float aX, float aY) {

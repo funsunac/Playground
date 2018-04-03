@@ -1,12 +1,10 @@
-package com.company.g1.g1extrateamlab;
+package com.company.g1.a1g1_madp;
 
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Handler;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -31,11 +29,8 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        gameView = new GameView(this);
         setContentView(R.layout.activity_game);
-//        final CollisionSystem collisionSystem = new CollisionSystem();
 
-//        ((ConstraintLayout)findViewById(R.id.gameLayout)).addView(game.gameView);
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         game = new Game(this, dm.heightPixels, dm.widthPixels);
@@ -61,5 +56,4 @@ public class GameActivity extends AppCompatActivity {
         game.pause();
         sensorManager.unregisterListener(sensorEventListener);
     }
-
 }

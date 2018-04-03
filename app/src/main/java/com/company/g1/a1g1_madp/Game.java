@@ -1,9 +1,13 @@
-package com.company.g1.g1extrateamlab;
+package com.company.g1.a1g1_madp;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
+
+/**
+ * Need to check if game object and handler is destroyed properly when pause and stop
+ */
 
 class Game {
     boolean  running;
@@ -40,6 +44,7 @@ class Game {
         gameView = new GameView(context);
         ((ConstraintLayout)((Activity)context).findViewById(R.id.gameLayout)).addView(gameView);
         collisionSystem = new CollisionSystem();
+
         spaceship = new Spaceship();
         gameView.spaceship = this.spaceship;
     }
@@ -58,6 +63,7 @@ class Game {
         if (!running) return;
         running = false;
         Enemy.stopSpawning();
+        spaceship.stopFire();
         handler.removeCallbacks(gameLoop);
         gameView.pause();
     }
