@@ -10,17 +10,18 @@ import android.support.constraint.ConstraintLayout;
  */
 
 class Game {
-    boolean  running;
-    Context  context;
-    GameView gameView;
-    CollisionSystem collisionSystem;
+    private boolean  running;
+    private Context  context;
+    private GameView gameView;
+    private GameUI   gameUI;
+    private CollisionSystem collisionSystem;
     Spaceship spaceship;
-    final Handler handler = new Handler();
-    final int tick = 15;
+    private Handler handler = new Handler();
+    private final int tick = 15;
 
     // Renderer runs separately in it's own thread
     // Good idea bad idea?
-    Runnable gameLoop = new Runnable () {
+    private Runnable gameLoop = new Runnable () {
         @Override
         public void run() {
             spaceship.update();
@@ -41,6 +42,7 @@ class Game {
     }
 
     void start() {
+        gameUI = new GameUI(context, this);
         gameView = new GameView(context);
         ((ConstraintLayout)((Activity)context).findViewById(R.id.gameLayout)).addView(gameView);
         collisionSystem = new CollisionSystem();
@@ -55,6 +57,7 @@ class Game {
         running = true;
         collisionSystem.setGridParams();
         Enemy.startSpawning();
+        spaceship.startFiring();
         handler.postDelayed(gameLoop, tick);
         gameView.resume();
     }
@@ -63,7 +66,7 @@ class Game {
         if (!running) return;
         running = false;
         Enemy.stopSpawning();
-        spaceship.stopFire();
+        spaceship.stopFiring();
         handler.removeCallbacks(gameLoop);
         gameView.pause();
     }

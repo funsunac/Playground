@@ -67,7 +67,6 @@ public class GameView extends SurfaceView implements Runnable {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-//        testThreadingEffect();
         drawSpaceship();
         drawBullets();
         drawEnemies();
@@ -93,20 +92,6 @@ public class GameView extends SurfaceView implements Runnable {
             float centerX = enemy.x + enemy.radius;
             float centerY = enemy.y + enemy.radius;
             canvas.drawCircle(centerX,centerY,enemy.radius, paint);
-        }
-    }
-
-    /**
-     * Tests how separate threads for game physics and renderer
-     * affects the game. Currently graphics is rendered on separate thread
-     * Therefore, "framerate" should, in theory, has no affect object speed.
-     * However, the use of CopyOnWriteArrayList kinda defeats the purpose? I dunno... Confused...
-     */
-    private void testThreadingEffect() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 }

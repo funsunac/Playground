@@ -5,12 +5,13 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.View;
 
 public class GameActivity extends AppCompatActivity {
-    GameView gameView;
     Game game;
     final int           PITCH_OFFSET = 5;   // Accelerometer Y-axis offset
     SensorManager       sensorManager;
@@ -28,11 +29,11 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_game);
 
         DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        getWindowManager().getDefaultDisplay().getRealMetrics(dm);
+
         game = new Game(this, dm.heightPixels, dm.widthPixels);
         game.start();
 

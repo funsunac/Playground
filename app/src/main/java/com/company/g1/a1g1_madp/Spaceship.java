@@ -13,7 +13,7 @@ class Spaceship extends MovableObject {
     private final static float  SHIP_SPEED    = 10;
     private final static float  SHIP_HEIGHT   = 100;
     private final static float  SHIP_WIDTH    = 100;
-    private       static long   FIRE_RATE     = 200;
+                  static long   FIRE_RATE     = 200;
     private final static float  BULLET_OFFSET = 10;     // How far is the bullet spawned from the ship
     private float               aX;
     private float               aY;
@@ -46,14 +46,13 @@ class Spaceship extends MovableObject {
         super(LAYOUT_WIDTH / 2 - SHIP_WIDTH / 2,
                 LAYOUT_HEIGHT - SHIP_HEIGHT * 1.5f,
                 SHIP_HEIGHT,SHIP_WIDTH, SHIP_SPEED);
-        fire();
     }
 
-    private void fire() {
+    void startFiring() {
         bulletHandler.postDelayed(bulletRunnable, FIRE_RATE);
     }
 
-    void stopFire() {
+    void stopFiring() {
         bulletHandler.removeCallbacks(bulletRunnable);
     }
 
