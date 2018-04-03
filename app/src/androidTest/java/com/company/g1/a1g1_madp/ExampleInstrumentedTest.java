@@ -1,4 +1,4 @@
-package com.company.g1.g1extrateamlab;
+package com.company.g1.a1g1_madp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -17,10 +17,10 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
 	@Test
-	public void useAppContext() throws Exception {
+	public void useAppContext() {
 		// Context of the app under test.
 		Context appContext = InstrumentationRegistry.getTargetContext();
 
-		assertEquals("com.company.g1.g1extrateamlab", appContext.getPackageName());
+		assertEquals("com.company.g1.a1g1_madp", appContext.getPackageName());
 	}
 }
