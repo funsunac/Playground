@@ -33,7 +33,9 @@ public class SplashActivity extends AppCompatActivity {
 		};
 
 		Timer mTimer = new Timer();
-		mTimer.schedule(mTimerTask, 3000);
+//		mTimer.schedule(mTimerTask, 3000);
+		// Made faster for debug
+		mTimer.schedule(mTimerTask, 30);
 
 	}
 
