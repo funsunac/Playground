@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -12,25 +13,44 @@ import android.view.SurfaceView;
 public class GameView extends SurfaceView implements Runnable {
 
     Spaceship spaceship;
-    Paint paint = new Paint();
+    Paint bulletPaint = new Paint();
+    Paint backgroundPaint = new Paint();
     Paint paint2 = new Paint();
-    Bitmap bitmap;
+
+
+    Bitmap spaceshipBitmap;
+    Bitmap enemyBitmap;
+    Bitmap towerBitmap;
+
     Thread renderThread = null;
     SurfaceHolder holder;
     Canvas canvas;
     volatile boolean running = false;
+    Matrix rotationMatrix = new Matrix();
 
     public GameView(Context context) {
         super(context);
         holder = getHolder();
         // Stupid
-        paint.setColor(Color.BLUE);
+        bulletPaint.setColor(Color.BLUE);
         paint2.setColor(0xfc00ff00);
     }
 
     void loadImageResources() {
-        Bitmap _bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.circle_vector_2);
-        bitmap = Bitmap.createScaledBitmap(_bitmap,(int)spaceship.width,(int)spaceship.height,false);
+        Bitmap _bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ship);
+        spaceshipBitmap = Bitmap.createScaledBitmap(_bitmap,(int)spaceship.width,(int)spaceship.height,false);
+
+        _bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.enemy);
+        // TODO Remove hardcode
+        enemyBitmap = Bitmap.createScaledBitmap(_bitmap,150,150,false);
+
+        _bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.tower);
+        towerBitmap = Bitmap.createScaledBitmap(_bitmap,150,150,false);
+
+
+
+        bulletPaint.setColor(getResources().getColor(R.color.colorBullet));
+        backgroundPaint.setColor(getResources().getColor(R.color.colorBackground));
     }
 
     public void resume() {
@@ -67,31 +87,40 @@ public class GameView extends SurfaceView implements Runnable {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+        canvas.drawColor(backgroundPaint.getColor());
         drawSpaceship();
         drawBullets();
         drawEnemies();
+        drawTowers();
     }
 
     private void drawSpaceship() {
-        canvas.drawBitmap(bitmap,spaceship.x,spaceship.y,null);
-//        float centerX = spaceship.x + spaceship.radius;
-//        float centerY = spaceship.y + spaceship.radius;
-//        canvas.drawCircle(centerX,centerY,spaceship.radius,paint);
+        rotationMatrix.setRotate(spaceship.getRotation()+90f, spaceship.radius, spaceship.radius);
+        rotationMatrix.postTranslate(spaceship.x,spaceship.y);
+        canvas.drawBitmap(spaceshipBitmap,rotationMatrix,null);
     }
 
     private void drawBullets() {
         for(Bullet bullet : Bullet.bullets) {
             float centerX = bullet.x + bullet.radius;
             float centerY = bullet.y + bullet.radius;
-            canvas.drawCircle(centerX,centerY,bullet.radius, paint);
+            canvas.drawCircle(centerX,centerY,bullet.radius, bulletPaint);
         }
     }
 
     private void drawEnemies() {
         for(Enemy enemy : Enemy.enemies) {
-            float centerX = enemy.x + enemy.radius;
-            float centerY = enemy.y + enemy.radius;
-            canvas.drawCircle(centerX,centerY,enemy.radius, paint);
+//            float centerX = enemy.x + enemy.radius;
+//            float centerY = enemy.y + enemy.radius;
+//            canvas.drawCircle(centerX,centerY,enemy.radius, bulletPaint);
+            canvas.drawBitmap(enemyBitmap,enemy.x,enemy.y,null);
+        }
+    }
+
+    private void drawTowers() {
+        for(Tower tower : Tower.towers) {
+            canvas.drawBitmap(towerBitmap,tower.x,tower.y,null);
+
         }
     }
 }

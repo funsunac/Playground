@@ -1,5 +1,7 @@
 package com.company.g1.a1g1_madp;
 
+import android.graphics.Rect;
+
 import java.util.EnumSet;
 
 abstract class GameObject{
@@ -25,4 +27,9 @@ abstract class GameObject{
         this.width  = width;
         this.radius = height / 2;
     }
+
+    Rect getHitBox() {
+        return new Rect((int)x,(int)y,(int)(x+width), (int)(y+height));
+    }
+
 }

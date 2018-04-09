@@ -32,18 +32,22 @@ public class CollisionSystem {
     }
 
     void detectCollision() {
-        resetGridState();
-        // Broad phase
-        for(Bullet bullet : Bullet.bullets)
-            findGridId(bullet);
+//        resetGridState();
+//        // Broad phase
+//        for(Bullet bullet : Bullet.bullets)
+//            findGridId(bullet);
+//        for(Enemy enemy: Enemy.enemies)
+//            findGridId(enemy);
+//        // Narrow phase
+//        for(int i = 0; i < M; i++) {
+//            for(int j = 0; j < N; j++) {
+//                grids[i][j].detectCollisionInGrid();
+//            }
+//        }
         for(Enemy enemy: Enemy.enemies)
-            findGridId(enemy);
-        // Narrow phase
-        for(int i = 0; i < M; i++) {
-            for(int j = 0; j < N; j++) {
-                grids[i][j].detectCollisionInGrid();
-            }
-        }
+            for(Bullet bullet : Bullet.bullets)
+                if(enemy.getHitBox().intersect(bullet.getHitBox()))
+                    enemy.onHit();
     }
 
     void resetGridState() {

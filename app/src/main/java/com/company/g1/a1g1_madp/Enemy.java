@@ -8,8 +8,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Enemy extends MovableObject{
 
     private final static float  ENEMY_SPEED      = 10;
-    private final static float  ENEMY_HEIGHT     = 50;
-    private final static float  ENEMY_WIDTH      = 50;
+    private final static float  ENEMY_HEIGHT     = 150;
+    private final static float  ENEMY_WIDTH      = 150;
     private final static long   ENEMY_SPAWN_RATE = 1000;
     static CopyOnWriteArrayList<Enemy> enemies = new CopyOnWriteArrayList<>();
 
@@ -47,6 +47,7 @@ public class Enemy extends MovableObject{
     }
 
     void onHit() {
+        Game.money += 100;
         removeSelf();
     }
 }

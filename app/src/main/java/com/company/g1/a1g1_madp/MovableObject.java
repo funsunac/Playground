@@ -26,7 +26,6 @@ abstract class MovableObject extends GameObject {
     }
 
     void update(float aX, float aY) {
-
         float vX = (float)(speed * -aX);
         float vY = (float)(speed *  aY);
         x += vX;
@@ -59,8 +58,5 @@ abstract class MovableObject extends GameObject {
             onOutOfBound(bounds);
     }
 
-    Rect getHitBox() {
-        return new Rect((int)x,(int)y,(int)(x+width), (int)(y+height));
-    }
 
 }

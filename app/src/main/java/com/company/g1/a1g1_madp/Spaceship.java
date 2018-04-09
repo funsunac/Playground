@@ -11,19 +11,17 @@ class Spaceship extends MovableObject {
     // A better solution is much much much welcomed!
 
     private final static float  SHIP_SPEED    = 10;
-    private final static float  SHIP_HEIGHT   = 100;
-    private final static float  SHIP_WIDTH    = 100;
+    private final static float  SHIP_HEIGHT   = 200;
+    private final static float  SHIP_WIDTH    = 200;
                   static long   FIRE_RATE     = 200;
     private final static float  BULLET_OFFSET = 10;     // How far is the bullet spawned from the ship
     private float               aX;
     private float               aY;
 //    private Class               bulletClass = Bullet.class;
 
-
     /*
      * There's a memory leak problem with handler:
      * it stops the instance from being garbage-collected,
-     * thus causing memory leaks.
      * https://www.androiddesignpatterns.com/2013/01/inner-class-handler-memory-leak.html
      */
 
@@ -66,6 +64,6 @@ class Spaceship extends MovableObject {
         super.update(aX, aY);
     }
 
-    //    public void  setRotation(float rotation) { this.rotation = rotation; }
-    //    public float getRotation()               { return rotation; }
+        public void  setRotation(float rotation) { this.theta = rotation; }
+        public float getRotation()               { return theta; }
 }

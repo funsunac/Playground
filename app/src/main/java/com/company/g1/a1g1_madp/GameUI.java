@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 public class GameUI {
     private Game game;
@@ -21,6 +22,7 @@ public class GameUI {
     private PopupWindow      pauseWindow;
     private Button           option1;
     private Button           option2;
+    private TextView         moneyLabel;
 
     // UI state
     private boolean isImmersive = false;
@@ -32,6 +34,7 @@ public class GameUI {
 
         uiLayout = context.findViewById(R.id.uiLayout);
         pauseButton = context.findViewById(R.id.pauseButton);
+        moneyLabel = context.findViewById(R.id.moneyLabel);
         pauseButton.setOnClickListener(view -> togglePauseUi());
         pauseWindow = new PopupWindow(context);
 
@@ -91,5 +94,11 @@ public class GameUI {
         else {
             pauseWindow.dismiss();
         }
+    }
+
+    // Omg it is getting very messy
+
+    void refreshUI() {
+        moneyLabel.setText(String.valueOf(Game.money));
     }
 }

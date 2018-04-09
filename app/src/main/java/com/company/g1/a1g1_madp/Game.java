@@ -12,9 +12,13 @@ import android.support.constraint.ConstraintLayout;
 class Game {
     private boolean  running;
     private Context  context;
-    private GameView gameView;
-    private GameUI   gameUI;
+
+    //
+    private GameView        gameView;
+    private GameUI          gameUI;
     private CollisionSystem collisionSystem;
+    private InputSystem     inputSystem;
+
     Spaceship spaceship;
     private Handler handler = new Handler();
     private final int tick = 15;
@@ -30,9 +34,15 @@ class Game {
             for(Enemy enemy : Enemy.enemies)
                 enemy.update();
             collisionSystem.detectCollision();
+            // Omg omg
+            gameUI.refreshUI();
             handler.postDelayed(this, tick);
         }
     };
+
+    //
+
+    static int money = 1000;
 
     Game(Context context, int height, int width) {
         this.context = context;
@@ -42,13 +52,17 @@ class Game {
     }
 
     void start() {
-        gameUI = new GameUI(context, this);
-        gameView = new GameView(context);
-        ((ConstraintLayout)((Activity)context).findViewById(R.id.gameLayout)).addView(gameView);
+        gameUI          = new GameUI(context, this);
+        gameView        = new GameView(context);
         collisionSystem = new CollisionSystem();
+        inputSystem     = new InputSystem(this);
 
+        ((ConstraintLayout)((Activity)context).findViewById(R.id.gameLayout)).addView(gameView);
         spaceship = new Spaceship();
         gameView.spaceship = this.spaceship;
+
+        //
+        new Tower(GameObject.LAYOUT_WIDTH/2,GameObject.LAYOUT_HEIGHT/2,150,150);
     }
 
     void resume() {
@@ -69,5 +83,19 @@ class Game {
         spaceship.stopFiring();
         handler.removeCallbacks(gameLoop);
         gameView.pause();
+    }
+
+    //
+
+    Tower findTower(float x, float y) {
+        for(Tower tower : Tower.towers) {
+            if(tower.getHitBox().contains((int)x,(int)y))
+                return tower;
+        }
+        return null;
+    }
+
+    GameView getGameView() {
+        return gameView;
     }
 }

@@ -7,8 +7,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Bullet extends MovableObject {
 
     private final static float  BULLET_SPEED    = 20;
-            final static float  BULLET_HEIGHT   = 40;
-            final static float  BULLET_WIDTH    = 40;
+            final static float  BULLET_HEIGHT   = 30;
+            final static float  BULLET_WIDTH    = 30;
 
     static CopyOnWriteArrayList<Bullet> bullets = new CopyOnWriteArrayList<>();
 
